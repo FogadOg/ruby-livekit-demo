@@ -2,9 +2,6 @@ source "https://rubygems.org"
 
 ruby "3.3.0"
 
-# This gem allows us to talk to the LiveKit server
-gem 'rack-cors'
-
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.4"
 
