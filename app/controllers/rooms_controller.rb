@@ -6,7 +6,8 @@ class RoomsController < ApplicationController
       token.identity = params[:participant_identity]
       token.add_grant(roomJoin: true, room: params[:room_name])
 
-      render json: {token: token.to_jwt, identity: params[:participant_identity], roomName: params[:room_name]}
+      # render json: {token: token.to_jwt, identity: params[:participant_identity], roomName: params[:room_name]}
+      @token = token.to_jwt
     end
   end
   
