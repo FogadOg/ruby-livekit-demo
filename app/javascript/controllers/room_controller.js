@@ -29,18 +29,17 @@ export default class extends Controller {
     
     this.room.on('trackSubscribed', handleTrackSubscribed);
     
-    await room.connect('ws://localhost:7880', this.tokenValue);
+    await this.room.connect('ws://localhost:7880', this.tokenValue);
+
 
     const cameraId = getDeviceIds()
     
-    const participant = room.localParticipant
+    const participant = this.room.localParticipant
 
     
     await participant.setCameraEnabled(true, {
       deviceId: cameraId,
     });
-
-
 
     // console.log("participant: ",participant);
     // await participant.setCameraEnabled(true);
@@ -48,25 +47,25 @@ export default class extends Controller {
 
     // await participant.setScreenShareEnabled(true);
 
-    
-
-    function handleTrackSubscribed(
-      track,
-    ) {
-      console.log("track: ",track);
-
-      if (track.kind === Track.Kind.Video || track.kind === Track.Kind.Audio) {
-        const element = track.attach();
-        console.log("element: ",element);
-        
-        parentElement.appendChild(element);
-      }
-    }
 
     
   }
   async leave(){
       await this.room.disconnect();
       // window.location.href = "/"
+  }
+}
+
+
+function handleTrackSubscribed(
+    track,
+) {
+  console.log("track: ",track);
+
+  if (track.kind === Track.Kind.Video || track.kind === Track.Kind.Audio) {
+    const element = track.attach();
+    console.log("element: ",element);
+
+    parentElement.appendChild(element);
   }
 }
