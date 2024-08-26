@@ -5,8 +5,8 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static values = { token: String }
 
-  connect() {
-    const room = new LivekitClient.Room({
+  async connect() {
+    this.room = new LivekitClient.Room({
       // automatically manage subscribed video quality
       adaptiveStream: true,
 
@@ -14,10 +14,15 @@ export default class extends Controller {
       dynacast: true,
     });
 
-    console.log(room)
-    // pre-warm connection, this can be called as early as your page is loaded
-    room.prepareConnection("ws://127.0.0.1:7880", this.tokenValue);
-    room.connect("ws://127.0.0.1:7880", this.tokenValue);
+    console.log(this.room)
 
+    // pre-warm connection, this can be called as early as your page is loaded
+    this.room.prepareConnection("ws://127.0.0.1:7880", this.tokenValue);
+    await this.room.connect("ws://127.0.0.1:7880", this.tokenValue);
+
+  }
+  async leave(){
+      await this.room.disconnect();
+      // window.location.href = "/"
   }
 }
