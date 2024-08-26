@@ -16,7 +16,7 @@ ingress:
 
 #keys:
   #webhook_key: webhook_secret
-  devkey: secret
+#  devkey: secret
 
 room:
   #   # allow rooms to be automatically created when participants join, defaults to true
