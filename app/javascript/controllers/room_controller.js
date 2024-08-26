@@ -14,7 +14,7 @@ export default class extends Controller {
   
 
   async connect() {
-    const room = new LivekitClient.Room({
+    this.room = new LivekitClient.Room({
       // automatically manage subscribed video quality
       adaptiveStream: true,
 
@@ -22,11 +22,12 @@ export default class extends Controller {
       dynacast: true,
     });
 
-    console.log(room)
+    console.log(this.room)
+
     // pre-warm connection, this can be called as early as your page is loaded
-    room.prepareConnection("ws://localhost:7880", this.tokenValue);
+    this.room.prepareConnection("ws://localhost:7880", this.tokenValue);
     
-    room.on('trackSubscribed', handleTrackSubscribed);
+    this.room.on('trackSubscribed', handleTrackSubscribed);
     
     await room.connect('ws://localhost:7880', this.tokenValue);
 
@@ -63,5 +64,9 @@ export default class extends Controller {
     }
 
     
+  }
+  async leave(){
+      await this.room.disconnect();
+      // window.location.href = "/"
   }
 }
